@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYDE Funding — 0% APR Business Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:       #0A0E12;
+  --bg-2:     #111820;
+  --bg-3:     #161E28;
+  --teal:     #3ECFCF;
+  --teal-dim: #2A9A9A;
+  --teal-glow:rgba(62,207,207,0.15);
+  --text:     #EEF2F5;
+  --muted:    #7A8A98;
+  --border:   rgba(62,207,207,0.18);
+  --border-2: rgba(255,255,255,0.07);
+  --gold:     #C9A84C;
+  --gold-light:#E8C97A;
+  --success:  #3ECFCF;
+  --danger:   #FF6B6B;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE TEXTURE ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ─── NAVIGATION ─────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,14,18,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-2);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--teal);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--bg);
+  letter-spacing: -1px;
+}
+
+.nav-logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.nav-logo-text span { color: var(--teal); }
+
+.nav-cta {
+  background: var(--teal);
+  color: var(--bg);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: #5EDEDE; transform: translateY(-1px); }
+
+/* ─── SCREEN SYSTEM ─────────────────────────────────────────────── */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding-top: 72px;
+  position: relative;
+  z-index: 1;
+}
+.screen.active { display: block; }
+
+/* ─── HERO / LANDING ─────────────────────────────────────────────── */
+#screen-landing {
+  display: none;
+  flex-direction: column;
+}
+#screen-landing.active { display: flex; }
+
+.hero {
+  position: relative;
+  padding: 80px 40px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(62,207,207,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+  padding: 8px 20px;
+  border-radius: 40px;
+  background: rgba(62,207,207,0.05);
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(52px, 9vw, 96px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-title .line-accent { color: var(--teal); }
+.hero-title .line-sub {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: var(--muted);
+  display: block;
+  margin-top: 8px;
+}
+
+.hero-verse {
+  max-width: 520px;
+  margin: 0 auto 36px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  font-style: italic;
+  border-left: 2px solid var(--teal);
+  padding-left: 20px;
+  text-align: left;
+}
+
+.hero-verse strong {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 52px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ─── VSL BLOCK ─────────────────────────────────────────────────── */
+.vsl-section {
+  max-width: 800px;
+  margin: 0 auto 64px;
+  padding: 0 40px;
+}
+
+.vsl-wrapper {
+  position: relative;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.vsl-placeholder {
+  text-align: center;
+}
+
+.vsl-play {
+  width: 72px; height: 72px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  transition: all 0.3s;
+  box-shadow: 0 0 40px rgba(62,207,207,0.4);
+}
+
+.vsl-play svg { fill: var(--bg); margin-left: 4px; }
+.vsl-wrapper:hover .vsl-play { transform: scale(1.1); }
+
+.vsl-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.vsl-sublabel { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* Embed mode */
+.vsl-wrapper.has-embed { cursor: default; }
+.vsl-embed { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+/* ─── HOW IT WORKS ─────────────────────────────────────────────── */
+.section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 40px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.step-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  padding: 28px 24px;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.step-card:hover {
+  border-color: var(--border);
+  transform: translateY(-3px);
+}
+
+.step-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(62,207,207,0.1);
+  line-height: 1;
+  margin-bottom: 12px;
+  position: absolute;
+  top: 20px; right: 20px;
+}
+
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.step-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ─── DIVIDER ─────────────────────────────────────────────────────── */
+.hr-teal {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.25;
+}
+
+/* ─── QUALIFY SECTION ─────────────────────────────────────────────── */
+.qualify-section {
+  padding: 80px 40px;
+  text-align: center;
+  background: linear-gradient(180deg, transparent, rgba(62,207,207,0.04), transparent);
+  position: relative;
+}
+
+.qualify-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 52px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.qualify-card::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+
+.qualify-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.qualify-sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--bg);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  background: #5EDEDE;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(62,207,207,0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--teal);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn-ghost:hover { color: var(--text); }
+
+/* ─── QUIZ SCREEN ─────────────────────────────────────────────────── */
+#screen-quiz.active { display: flex; align-items: flex-start; justify-content: center; }
+
+.quiz-container {
+  max-width: 680px;
+  width: 100%;
+  padding: 60px 40px;
+}
+
+.quiz-progress-bar {
+  height: 3px;
+  background: var(--border-2);
+  border-radius: 99px;
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.quiz-step {
+  display: none;
+  animation: fadeSlideIn 0.35s ease;
+}
+
+.quiz-step.active { display: block; }
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.quiz-step-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.quiz-question {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.quiz-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.quiz-options.single-col { grid-template-columns: 1fr; }
+
+.quiz-option {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.quiz-option:hover {
+  border-color: var(--teal);
+  background: var(--teal-glow);
+}
+
+.quiz-option.selected {
+  border-color: var(--teal);
+  background: rgba(62,207,207,0.1);
+}
+
+.quiz-option-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.quiz-option-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.quiz-option-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-top: 2px;
+}
+
+.quiz-option .check-circle {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-2);
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-option.selected .check-circle {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.quiz-option.selected .check-circle::after {
+  content: '✓';
+  font-size: 11px;
+  color: var(--bg);
+  font-weight: 700;
+}
+
+/* Text inputs in quiz */
+.quiz-input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.quiz-input-group.full { grid-template-columns: 1fr; }
+
+.input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.input-field {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+}
+
+.input-field:focus { border-color: var(--teal); }
+.input-field::placeholder { color: var(--muted); }
+
+select.input-field {
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.quiz-counter {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ─── RESULT SCREENS ─────────────────────────────────────────────── */
+#screen-qualified.active,
+#screen-foundation.active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.result-container {
+  max-width: 720px;
+  width: 100%;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.result-badge.green {
+  background: rgba(62,207,207,0.12);
+  border: 1px solid rgba(62,207,207,0.3);
+  color: var(--teal);
+}
+
+.result-badge.blue {
+  background: rgba(100,160,255,0.12);
+  border: 1px solid rgba(100,160,255,0.3);
+  color: #64A0FF;
+}
+
+.result-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(38px, 7vw, 72px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+
+.result-title .accent { color: var(--teal); }
+.result-title .accent-blue { color: #64A0FF; }
+
+.result-body {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 540px;
+  margin: 0 auto 48px;
+}
+
+.result-body strong { color: var(--text); font-weight: 600; }
+
+.result-points {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+  text-align: left;
+}
+
+.result-point {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.result-point-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+
+.result-point-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.result-point-desc {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ─── OFFER SHEET ─────────────────────────────────────────────────── */
+#screen-offer.active { display: block; }
+
+.offer-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.offer-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.offer-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+
+.offer-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.offer-title span { color: var(--teal); }
+
+.offer-subtitle {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.offer-divider {
+  width: 48px; height: 2px;
+  background: var(--teal);
+  margin: 28px auto;
+  opacity: 0.6;
+}
+
+.offer-includes {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px 36px;
+  margin-bottom: 44px;
+}
+
+.offer-includes-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.offer-includes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 28px;
+}
+
+.offer-include-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.offer-include-item::before {
+  content: '◆';
+  color: var(--teal);
+  font-size: 7px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.offer-pick-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.offer-pick-sub {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.offer-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.offer-option {
+  border-radius: 14px;
+  padding: 30px 22px;
+  border: 1px solid var(--border-2);
+  background: var(--bg-2);
+  position: relative;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.offer-option:hover {
+  border-color: var(--border);
+  transform: translateY(-3px);
+}
+
+.offer-option.selected {
+  border-color: var(--teal);
+  background: linear-gradient(160deg, rgba(62,207,207,0.08) 0%, var(--bg-2) 60%);
+  box-shadow: 0 0 30px rgba(62,207,207,0.1);
+}
+
+.offer-option.featured {
+  border-color: rgba(62,207,207,0.4);
+  background: linear-gradient(160deg, rgba(62,207,207,0.06) 0%, var(--bg-2) 60%);
+}
+
+.offer-badge {
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal);
+  color: var(--bg);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.offer-opt-letter {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.offer-opt-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.offer-opt-tagline {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.offer-price-main {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.offer-price-main .small { font-size: 18px; vertical-align: middle; }
+.offer-price-sub { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 300; }
+
+.offer-fee-tag {
+  display: inline-block;
+  background: rgba(62,207,207,0.08);
+  border: 1px solid rgba(62,207,207,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 500;
+  margin: 14px 0;
+}
+
+.offer-details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.offer-details li {
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 300;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.offer-details li::before {
+  content: '—';
+  color: var(--teal);
+  opacity: 0.4;
+  flex-shrink: 0;
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+.offer-details li.hl { color: #ddd; }
+.offer-details li.hl::before { opacity: 1; }
+
+.offer-insight {
+  background: linear-gradient(135deg, rgba(62,207,207,0.06) 0%, var(--bg-3) 100%);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px;
+  padding: 22px 28px;
+  margin-bottom: 36px;
+}
+
+.offer-insight p {
+  font-size: 14px;
+  font-weight: 300;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.offer-insight p strong { color: var(--teal); font-weight: 600; }
+
+.offer-calcs-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.offer-calcs-sub {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.offer-calcs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.calc-box {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  padding: 22px 20px;
+}
+
+.calc-title {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 12.5px;
+}
+
+.calc-row:last-of-type { border-bottom: none; }
+.calc-row .label { color: #888; font-weight: 300; }
+.calc-row .value { color: var(--text); font-weight: 400; }
+
+.calc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(62,207,207,0.2);
+}
+
+.calc-total .label { font-size: 12px; color: #bbb; font-weight: 400; }
+.calc-total .value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--teal);
+}
+
+.offer-select-cta {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.offer-selected-info {
+  display: none;
+  background: rgba(62,207,207,0.06);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 28px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--text);
+  text-align: left;
+}
+
+.offer-selected-info.visible { display: block; }
+.offer-selected-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; color: var(--teal); }
+
+/* ─── BOOKING SCREEN ─────────────────────────────────────────────── */
+#screen-booking.active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.booking-container {
+  max-width: 680px;
+  width: 100%;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.booking-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin-bottom: 20px;
+}
+
+.booking-title span { color: var(--teal); }
+
+.booking-sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 48px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.booking-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px;
+  margin-bottom: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-card::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+
+.booking-checklist {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.booking-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.check-icon {
+  width: 22px; height: 22px;
+  background: rgba(62,207,207,0.12);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--teal);
+  margin-top: 1px;
+}
+
+.booking-cta-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-booking {
+  background: var(--teal);
+  color: var(--bg);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 20px 52px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(62,207,207,0.25);
+}
+
+.btn-booking:hover {
+  background: #5EDEDE;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(62,207,207,0.35);
+}
+
+.booking-note {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 48px 40px;
+  border-top: 1px solid var(--border-2);
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 2;
+}
+
+footer strong { color: var(--teal); font-weight: 600; }
+
+/* ─── TOAST ─────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: rgba(62,207,207,0.4); color: var(--teal); }
+.toast.error { border-color: rgba(255,107,107,0.4); color: var(--danger); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  nav { padding: 14px 20px; }
+  .hero { padding: 50px 24px 40px; }
+  .hero-stats { gap: 24px; }
+  .vsl-section, .section { padding-left: 20px; padding-right: 20px; }
+  .qualify-card { padding: 36px 24px; }
+  .quiz-container, .result-container, .booking-container, .offer-wrapper { padding: 40px 20px; }
+  .quiz-options { grid-template-columns: 1fr; }
+  .quiz-input-group { grid-template-columns: 1fr; }
+  .offer-options, .offer-calcs { grid-template-columns: 1fr; }
+  .offer-includes-grid { grid-template-columns: 1fr; }
+  .result-points { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#" onclick="goTo('landing')">
+    <div class="nav-logo-mark">S</div>
+    <span class="nav-logo-text">SYDE <span>Funding</span></span>
+  </a>
+  <button class="nav-cta" onclick="goTo('quiz')">Check My Eligibility →</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: LANDING                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+
+    <div class="hero-eyebrow">0% APR Business Funding — No Collateral Required</div>
+
+    <h1 class="hero-title">
+      <span class="line-accent">Plant.</span><br>
+      Grow.<br>
+      <span style="color:var(--text)">Scale.</span>
+      <span class="line-sub">SYDE Funding</span>
+    </h1>
+
+    <p class="hero-verse">
+      <em>"The kingdom of heaven is like a mustard seed, which a man took and planted in his field.
+      Though it is the smallest of all seeds, yet when it grows, it is the largest of garden plants."</em><br><br>
+      <strong>— Matthew 13:31</strong><br>
+      <span style="font-style:normal; font-size:12px; color:var(--muted)">
+        Like the mustard seed, strong roots create unstoppable growth.
+        We plant your financial foundation so your business multiplies.
+      </span>
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">$150K+</div>
+        <div class="stat-label">Max Funding</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">0%</div>
+        <div class="stat-label">APR Period</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12–48</div>
+        <div class="stat-label">Month Runway</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">No</div>
+        <div class="stat-label">Collateral</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goTo('quiz')">
+      See If You Qualify
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l7 7-7 7M1 8h14"/></svg>
+    </button>
+  </div>
+
+  <!-- VSL -->
+  <div class="vsl-section">
+    <div class="vsl-wrapper" id="vslWrapper">
+      <!-- REPLACE: swap this placeholder with your embed iframe -->
+      <div class="vsl-placeholder" id="vslPlaceholder">
+        <div class="vsl-play">
+          <svg width="28" height="28" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vsl-label">Watch: How SYDE Funding Works</div>
+        <div class="vsl-sublabel">3-minute overview — watch before applying</div>
+      </div>
+      <!--
+        TO ADD YOUR VSL — paste your embed code here and remove the placeholder above.
+        Example (Vimeo): <iframe class="vsl-embed" src="https://player.vimeo.com/video/YOUR_ID?autoplay=1" allow="autoplay" frameborder="0"></iframe>
+        Example (YouTube): <iframe class="vsl-embed" src="https://www.youtube.com/embed/YOUR_ID?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+      -->
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <hr class="hr-teal">
+  <div class="section">
+    <div class="section-eyebrow">The Process</div>
+    <h2 class="section-title">How SYDE Funding Works</h2>
+    <p class="section-subtitle">We walk you through every step — from pre-qualification to funded capital in your account.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <span class="step-icon">📋</span>
+        <div class="step-title">Pre-Qualify</div>
+        <div class="step-desc">Answer a few quick questions. We assess your current credit position and funding readiness in minutes.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <span class="step-icon">🏗️</span>
+        <div class="step-title">Foundation Build</div>
+        <div class="step-desc">If needed, our AI credit repair program rebuilds your foundation — disputes, inquiry removal, and bank seeding.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <span class="step-icon">🏦</span>
+        <div class="step-title">Credit Stacking</div>
+        <div class="step-desc">We execute a tiered bank sequencing strategy to stack 0% APR business credit across multiple lenders.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <span class="step-icon">🚀</span>
+        <div class="step-title">Capital Deployed</div>
+        <div class="step-desc">$50K–$150K+ lands in your business account. No collateral, no dilution — just capital to grow on your terms.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr-teal">
+
+  <!-- WHO THIS IS FOR -->
+  <div class="section">
+    <div class="section-eyebrow">Who Qualifies</div>
+    <h2 class="section-title">Built For Business Owners</h2>
+    <p class="section-subtitle">Whether you're ready to fund today or need to build your foundation first — SYDE has a path for you.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-icon">🌱</span>
+        <div class="step-title">Startups & New Ventures</div>
+        <div class="step-desc">Just launched? We'll establish your business credit from scratch and position you for capital fast.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-icon">📈</span>
+        <div class="step-title">Scaling Businesses</div>
+        <div class="step-desc">Need working capital, inventory, or equipment? 0% APR gives you room to grow without bleeding cash flow.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-icon">🔧</span>
+        <div class="step-title">Credit Challenged</div>
+        <div class="step-desc">Past credit issues? Our Foundation Rebuild Program uses AI to repair and prepare you for full funding.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-icon">💼</span>
+        <div class="step-title">Any Industry</div>
+        <div class="step-desc">E-commerce, contractors, retail, services — if you operate a business, we can build a funding strategy for you.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUALIFY CTA -->
+  <div class="qualify-section">
+    <div class="qualify-card">
+      <div class="qualify-title">Ready to Get<br><span style="color:var(--teal)">Funded?</span></div>
+      <p class="qualify-sub">Take our 2-minute pre-qualification quiz. We'll tell you exactly where you stand and what your next step is.</p>
+      <button class="btn-primary" onclick="goTo('quiz')">
+        Start My Pre-Qualification
+        <span>→</span>
+      </button>
+      <p style="margin-top:16px; font-size:12px; color:var(--muted)">Free · No credit pull · Results in minutes</p>
+    </div>
+  </div>
+
+  <footer>
+    <strong>SYDE Funding</strong> &nbsp;·&nbsp; Business Capital Solutions<br>
+    0% APR Funding · AI Credit Repair · Foundation Build Program<br>
+    Results vary based on individual credit profile and business history. All fees disclosed upfront.
+  </footer>
+
+</div><!-- /screen-landing -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: QUIZ                                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-container">
+
+    <div class="quiz-progress-bar">
+      <div class="quiz-progress-fill" id="quizProgress" style="width:0%"></div>
+    </div>
+
+    <!-- Step 1: Credit Score -->
+    <div class="quiz-step active" data-step="1">
+      <div class="quiz-step-label">Step 1 of 8 — Credit Profile</div>
+      <h2 class="quiz-question">What is your estimated personal credit score?</h2>
+      <p class="quiz-hint">An estimate is fine — we do NOT pull your credit here.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'creditScore','Under 640')">
+          <span class="quiz-option-icon">🔴</span>
+          <div>
+            <div class="quiz-option-text">Under 640</div>
+            <div class="quiz-option-sub">Needs some work — we have a path for this</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'creditScore','640–679')">
+          <span class="quiz-option-icon">🟡</span>
+          <div>
+            <div class="quiz-option-text">640 – 679</div>
+            <div class="quiz-option-sub">Fair — may need foundation work first</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'creditScore','680–719')">
+          <span class="quiz-option-icon">🟠</span>
+          <div>
+            <div class="quiz-option-text">680 – 719</div>
+            <div class="quiz-option-sub">Good — strong funding candidate</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'creditScore','720+')">
+          <span class="quiz-option-icon">🟢</span>
+          <div>
+            <div class="quiz-option-text">720 or Above</div>
+            <div class="quiz-option-sub">Excellent — priority funding candidate</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="goTo('landing')">← Back</button>
+        <span class="quiz-counter">1 / 8</span>
+        <button class="btn-primary" onclick="nextStep(1)" id="next1" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Recent Negatives -->
+    <div class="quiz-step" data-step="2">
+      <div class="quiz-step-label">Step 2 of 8 — Credit History</div>
+      <h2 class="quiz-question">Any late payments, bankruptcies, charge-offs or collections in the last 24 months?</h2>
+      <p class="quiz-hint">Be honest — this helps us build the right plan for you.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'recentNegatives','None — clean file')">
+          <span class="quiz-option-icon">✅</span>
+          <div>
+            <div class="quiz-option-text">None — clean file</div>
+            <div class="quiz-option-sub">No negatives in the last 24 months</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'recentNegatives','Yes — 1 item')">
+          <span class="quiz-option-icon">⚠️</span>
+          <div>
+            <div class="quiz-option-text">Yes — 1 item</div>
+            <div class="quiz-option-sub">One late payment or negative mark</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'recentNegatives','Yes — 2–3 items')">
+          <span class="quiz-option-icon">🔶</span>
+          <div>
+            <div class="quiz-option-text">Yes — 2 to 3 items</div>
+            <div class="quiz-option-sub">A few negatives to address</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'recentNegatives','Yes — 4+ items / not sure')">
+          <span class="quiz-option-icon">🔴</span>
+          <div>
+            <div class="quiz-option-text">Yes — 4+ items / not sure</div>
+            <div class="quiz-option-sub">Multiple negatives or unsure of status</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(2)">← Back</button>
+        <span class="quiz-counter">2 / 8</span>
+        <button class="btn-primary" onclick="nextStep(2)" id="next2" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Business Entity -->
+    <div class="quiz-step" data-step="3">
+      <div class="quiz-step-label">Step 3 of 8 — Business Structure</div>
+      <h2 class="quiz-question">Do you currently have an LLC or Corporation?</h2>
+      <p class="quiz-hint">Your business entity is key to unlocking business credit.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'businessEntity','Yes — LLC')">
+          <span class="quiz-option-icon">🏢</span>
+          <div>
+            <div class="quiz-option-text">Yes — LLC</div>
+            <div class="quiz-option-sub">Limited Liability Company already formed</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'businessEntity','Yes — Corporation')">
+          <span class="quiz-option-icon">🏛️</span>
+          <div>
+            <div class="quiz-option-text">Yes — Corporation</div>
+            <div class="quiz-option-sub">S-Corp or C-Corp already formed</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'businessEntity','No — Sole Prop')">
+          <span class="quiz-option-icon">👤</span>
+          <div>
+            <div class="quiz-option-text">No — Sole Proprietor</div>
+            <div class="quiz-option-sub">Operating under my personal name</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'businessEntity','No — Need to Form One')">
+          <span class="quiz-option-icon">🌱</span>
+          <div>
+            <div class="quiz-option-text">No — I need to form one</div>
+            <div class="quiz-option-sub">Pre-launch or not yet set up</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(3)">← Back</button>
+        <span class="quiz-counter">3 / 8</span>
+        <button class="btn-primary" onclick="nextStep(3)" id="next3" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Business Bank Account -->
+    <div class="quiz-step" data-step="4">
+      <div class="quiz-step-label">Step 4 of 8 — Banking</div>
+      <h2 class="quiz-question">Do you have a business bank account?</h2>
+      <p class="quiz-hint">Banks look at your business banking history when making funding decisions.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'bankAccount','Yes — Active (90+ days)')">
+          <span class="quiz-option-icon">🏦</span>
+          <div>
+            <div class="quiz-option-text">Yes — Active (90+ days old)</div>
+            <div class="quiz-option-sub">Established business banking relationship</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'bankAccount','Yes — New (under 90 days)')">
+          <span class="quiz-option-icon">🆕</span>
+          <div>
+            <div class="quiz-option-text">Yes — New (under 90 days)</div>
+            <div class="quiz-option-sub">Recently opened business account</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'bankAccount','No — not yet')">
+          <span class="quiz-option-icon">❌</span>
+          <div>
+            <div class="quiz-option-text">No — not yet</div>
+            <div class="quiz-option-sub">Haven't opened one yet — we can help with this</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(4)">← Back</button>
+        <span class="quiz-counter">4 / 8</span>
+        <button class="btn-primary" onclick="nextStep(4)" id="next4" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Liquid Capital -->
+    <div class="quiz-step" data-step="5">
+      <div class="quiz-step-label">Step 5 of 8 — Liquid Assets</div>
+      <h2 class="quiz-question">Can you show at least $5,000 liquid for bank verification?</h2>
+      <p class="quiz-hint">This can be personal or business funds — banks use this to verify financial stability.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'liquidCapital','Yes — personal or business')">
+          <span class="quiz-option-icon">💰</span>
+          <div>
+            <div class="quiz-option-text">Yes — I have $5,000+ available</div>
+            <div class="quiz-option-sub">Personal or business account</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'liquidCapital','Not yet — working on it')">
+          <span class="quiz-option-icon">📈</span>
+          <div>
+            <div class="quiz-option-text">Not yet — working on it</div>
+            <div class="quiz-option-sub">Building toward that amount now</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'liquidCapital','No — not right now')">
+          <span class="quiz-option-icon">🔄</span>
+          <div>
+            <div class="quiz-option-text">No — not right now</div>
+            <div class="quiz-option-sub">This is part of why I need funding</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(5)">← Back</button>
+        <span class="quiz-counter">5 / 8</span>
+        <button class="btn-primary" onclick="nextStep(5)" id="next5" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Investment Readiness -->
+    <div class="quiz-step" data-step="6">
+      <div class="quiz-step-label">Step 6 of 8 — Investment Readiness</div>
+      <h2 class="quiz-question">To get started, are you in a position to invest in your funding program today?</h2>
+      <p class="quiz-hint">Every dollar you invest upfront is credited back to you at funding.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'investmentReady','Yes — $2,500–$3,000+ ready')">
+          <span class="quiz-option-icon">🚀</span>
+          <div>
+            <div class="quiz-option-text">Yes — I have $2,500–$3,000+ ready</div>
+            <div class="quiz-option-sub">Ready to move forward today</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'investmentReady','Yes — $1,000–$2,500 available')">
+          <span class="quiz-option-icon">💼</span>
+          <div>
+            <div class="quiz-option-text">Yes — I have $1,000–$2,500 available</div>
+            <div class="quiz-option-sub">Can get started with a monthly plan</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'investmentReady','I have something — need more info first')">
+          <span class="quiz-option-icon">🤔</span>
+          <div>
+            <div class="quiz-option-text">I have something — need more info first</div>
+            <div class="quiz-option-sub">Want to understand the full picture before committing</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'investmentReady','Not right now — need more info')">
+          <span class="quiz-option-icon">📋</span>
+          <div>
+            <div class="quiz-option-text">Not right now — need more info</div>
+            <div class="quiz-option-sub">Still exploring my options</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(6)">← Back</button>
+        <span class="quiz-counter">6 / 8</span>
+        <button class="btn-primary" onclick="nextStep(6)" id="next6" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Funding Timeline -->
+    <div class="quiz-step" data-step="7">
+      <div class="quiz-step-label">Step 7 of 8 — Timeline</div>
+      <h2 class="quiz-question">How soon do you need access to capital?</h2>
+      <p class="quiz-hint">This helps us prioritize your funding strategy.</p>
+      <div class="quiz-options single-col">
+        <div class="quiz-option" onclick="selectOption(this,'fundingTimeline','ASAP — 0 to 30 days')">
+          <span class="quiz-option-icon">⚡</span>
+          <div>
+            <div class="quiz-option-text">ASAP — within 30 days</div>
+            <div class="quiz-option-sub">Urgent — ready to move immediately</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'fundingTimeline','1–2 months')">
+          <span class="quiz-option-icon">📅</span>
+          <div>
+            <div class="quiz-option-text">1 – 2 months</div>
+            <div class="quiz-option-sub">Planning ahead, ready to start now</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'fundingTimeline','2–4 months')">
+          <span class="quiz-option-icon">🗓️</span>
+          <div>
+            <div class="quiz-option-text">2 – 4 months</div>
+            <div class="quiz-option-sub">Building toward funding, need prep time</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+        <div class="quiz-option" onclick="selectOption(this,'fundingTimeline','Just exploring')">
+          <span class="quiz-option-icon">🔍</span>
+          <div>
+            <div class="quiz-option-text">Just exploring for now</div>
+            <div class="quiz-option-sub">Researching options, no hard deadline</div>
+          </div>
+          <div class="check-circle"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(7)">← Back</button>
+        <span class="quiz-counter">7 / 8</span>
+        <button class="btn-primary" onclick="nextStep(7)" id="next7" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 8: Contact Info -->
+    <div class="quiz-step" data-step="8">
+      <div class="quiz-step-label">Step 8 of 8 — Your Info</div>
+      <h2 class="quiz-question">Where should we send your results?</h2>
+      <p class="quiz-hint">We'll use this to send your personalized funding report and next steps. No spam — ever.</p>
+      <div class="quiz-input-group">
+        <div class="input-wrap">
+          <label class="input-label">First Name</label>
+          <input class="input-field" type="text" id="firstName" placeholder="Alex" oninput="checkContactForm()">
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Last Name</label>
+          <input class="input-field" type="text" id="lastName" placeholder="Johnson" oninput="checkContactForm()">
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Mobile Phone</label>
+          <input class="input-field" type="tel" id="phone" placeholder="(555) 000-0000" oninput="checkContactForm()">
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Email Address</label>
+          <input class="input-field" type="email" id="email" placeholder="you@business.com" oninput="checkContactForm()">
+        </div>
+      </div>
+      <div class="quiz-input-group full">
+        <div class="input-wrap">
+          <label class="input-label">Legal Business Name</label>
+          <input class="input-field" type="text" id="businessName" placeholder="Your Business Name LLC" oninput="checkContactForm()">
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:24px;font-weight:300;">
+        🔒 Your information is private and never sold or shared with third parties.
+      </p>
+      <div class="quiz-nav">
+        <button class="btn-ghost" onclick="prevStep(8)">← Back</button>
+        <span class="quiz-counter">8 / 8</span>
+        <button class="btn-primary" onclick="submitQuiz()" id="next8" disabled>
+          Get My Results →
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /screen-quiz -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: QUALIFIED                                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-qualified" class="screen">
+  <div class="result-container">
+    <div class="result-badge green">
+      <span>✦</span> Pre-Qualification Approved
+    </div>
+
+    <h1 class="result-title">
+      Congratulations,<br>
+      <span id="qualifiedName" class="accent">You Qualify</span>
+    </h1>
+
+    <p class="result-body">
+      Based on your responses, <strong>you are a strong candidate</strong> for our 0% APR business funding program.
+      You're ready to access <strong>$50K–$150K+</strong> in capital with zero interest for 12–48 months.
+      Let's get you to the next step.
+    </p>
+
+    <div class="result-points">
+      <div class="result-point">
+        <span class="result-point-icon">✅</span>
+        <div class="result-point-title">Credit Profile</div>
+        <div class="result-point-desc">Your score range meets our funding threshold. We're ready to execute.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">🏦</span>
+        <div class="result-point-title">Bank Sequencing</div>
+        <div class="result-point-desc">Our tiered strategy will maximize approvals across multiple lenders.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">⚡</span>
+        <div class="result-point-title">Speed to Fund</div>
+        <div class="result-point-desc">Qualified clients typically see capital within 30–60 days of onboarding.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">🛡️</span>
+        <div class="result-point-title">0% APR Runway</div>
+        <div class="result-point-desc">No interest charges for your entire introductory period — keep every dollar working.</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="margin:0 auto;display:flex;" onclick="goTo('offer')">
+      View My Funding Options →
+    </button>
+    <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--muted)">
+      See pricing & select your package
+    </p>
+  </div>
+</div><!-- /screen-qualified -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: FOUNDATION PROGRAM                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-foundation" class="screen">
+  <div class="result-container">
+    <div class="result-badge blue">
+      <span>◈</span> Foundation Program
+    </div>
+
+    <h1 class="result-title">
+      You're On<br>
+      <span id="foundationName" class="accent-blue">The Path</span>
+    </h1>
+
+    <p class="result-body">
+      <strong>Great news</strong> — based on your profile, we can absolutely get you funded.
+      You'll start with our <strong>AI-powered Foundation Rebuild Program</strong> which prepares your credit
+      profile for full funding. This is not a setback — it's a <strong>strategic first step</strong>.
+      Most clients complete the foundation phase and access full capital within 60–120 days.
+    </p>
+
+    <div class="result-points">
+      <div class="result-point">
+        <span class="result-point-icon">🤖</span>
+        <div class="result-point-title">AI Credit Repair</div>
+        <div class="result-point-desc">Our AI identifies and disputes negative items, removes inquiries, and optimizes your file.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">🌱</span>
+        <div class="result-point-title">Foundation Build</div>
+        <div class="result-point-desc">We establish the right accounts and seed your banking relationships for maximum approval odds.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">🗓️</span>
+        <div class="result-point-title">60–120 Days</div>
+        <div class="result-point-desc">Most clients are fully funded within 60–120 days after starting the foundation program.</div>
+      </div>
+      <div class="result-point">
+        <span class="result-point-icon">🛤️</span>
+        <div class="result-point-title">Clear Roadmap</div>
+        <div class="result-point-desc">You'll receive a step-by-step plan showing exactly what needs to happen to get you funded.</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--muted); line-height:1.7; max-width:500px; margin:0 auto 36px; text-align:center;">
+      <em>"Like the mustard seed, every strong tree started from the ground up.
+      Your foundation is being built — and what grows from it will be unstoppable."</em>
+    </p>
+
+    <button class="btn-primary" style="margin:0 auto;display:flex;" onclick="goTo('offer')">
+      View Foundation + Funding Options →
+    </button>
+    <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--muted)">
+      See our packages and get started today
+    </p>
+  </div>
+</div><!-- /screen-foundation -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: OFFER SHEET                                             -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-offer" class="screen">
+  <div class="offer-wrapper">
+
+    <div class="offer-header">
+      <div class="offer-eyebrow">SYDE Funding — Pricing &amp; Packages</div>
+      <h1 class="offer-title">Get <span>Funded.</span><br>Keep Control.</h1>
+      <p class="offer-subtitle">Full-service business credit stacking &amp; funding — from clean file to closed deal.</p>
+      <div class="offer-divider"></div>
+    </div>
+
+    <div class="offer-includes">
+      <div class="offer-includes-label">Everything Included — All Three Options</div>
+      <div class="offer-includes-grid">
+        <div class="offer-include-item">Full credit file audit &amp; roadmap</div>
+        <div class="offer-include-item">Dispute &amp; inquiry removal strategy</div>
+        <div class="offer-include-item">Bank seeding sequence &amp; timing</div>
+        <div class="offer-include-item">0% credit stacking execution</div>
+        <div class="offer-include-item">Weekly progress updates</div>
+        <div class="offer-include-item">CLI &amp; high-limit card strategy</div>
+        <div class="offer-include-item">Business entity setup guidance</div>
+        <div class="offer-include-item">AI-powered credit foundation support</div>
+      </div>
+    </div>
+
+    <div class="offer-pick-label">Choose Your Path</div>
+    <div class="offer-pick-sub">Every dollar paid upfront is credited back at funding. Pick what works for you.</div>
+
+    <div class="offer-options">
+
+      <div class="offer-option" id="optA" onclick="selectPackage('A')">
+        <div class="offer-opt-letter">Option A</div>
+        <div class="offer-opt-name">Monthly Plan</div>
+        <div class="offer-opt-tagline">Lowest barrier — get started today</div>
+        <div class="offer-price-main">$297<span class="small">/mo</span></div>
+        <div class="offer-price-sub">4-month commitment · $1,188 total</div>
+        <div class="offer-fee-tag">+ 10% Success Fee</div>
+        <ul class="offer-details">
+          <li>No large upfront payment</li>
+          <li>Monthly payments do not credit toward backend</li>
+          <li>Best for those building cash flow</li>
+        </ul>
+      </div>
+
+      <div class="offer-option featured" id="optB" onclick="selectPackage('B')">
+        <div class="offer-badge">Best Value</div>
+        <div class="offer-opt-letter">Option B</div>
+        <div class="offer-opt-name">Upfront Standard</div>
+        <div class="offer-opt-tagline">Pay once, skip the monthly — credited back</div>
+        <div class="offer-price-main">$1,497</div>
+        <div class="offer-price-sub">one-time · no monthly fees</div>
+        <div class="offer-fee-tag">+ 10% Success Fee</div>
+        <ul class="offer-details">
+          <li class="hl">Full $1,497 credited toward success fee at close</li>
+          <li>No recurring charges</li>
+          <li>Priority onboarding &amp; support</li>
+        </ul>
+      </div>
+
+      <div class="offer-option" id="optC" onclick="selectPackage('C')">
+        <div class="offer-opt-letter">Option C</div>
+        <div class="offer-opt-name">Upfront Premium</div>
+        <div class="offer-opt-tagline">Cut your backend in half — biggest savings at scale</div>
+        <div class="offer-price-main">$2,997</div>
+        <div class="offer-price-sub">one-time · no monthly fees</div>
+        <div class="offer-fee-tag">+ 5% Success Fee</div>
+        <ul class="offer-details">
+          <li class="hl">Full $2,997 credited toward success fee at close</li>
+          <li class="hl">Half the backend rate — saves $5,000+ on $100K round</li>
+          <li>Best for clients targeting $100K+</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="offer-insight">
+      <p>
+        <strong>Why pay upfront?</strong> On a $100K funding round, Option C's 5% fee saves you <strong>$5,000</strong>
+        vs. the standard 10% rate — making the $2,997 upfront pay for itself nearly <strong>twice over.</strong>
+        Every dollar you put in upfront comes back off your success fee at close. The math gets better the bigger your round.
+      </p>
+    </div>
+
+    <div class="offer-calcs-label">See the Math</div>
+    <div class="offer-calcs-sub">Example based on $100,000 in total funds secured</div>
+
+    <div class="offer-calcs">
+      <div class="calc-box">
+        <div class="calc-title">Option A · Monthly</div>
+        <div class="calc-row"><span class="label">Paid in (4 mo)</span><span class="value">$1,188</span></div>
+        <div class="calc-row"><span class="label">Success fee (10%)</span><span class="value">$10,000</span></div>
+        <div class="calc-row"><span class="label">Credit applied</span><span class="value">$0</span></div>
+        <div class="calc-row"><span class="label">Total cost</span><span class="value">$11,188</span></div>
+        <div class="calc-total"><span class="label">You net</span><span class="value">$88,812</span></div>
+      </div>
+      <div class="calc-box">
+        <div class="calc-title">Option B · $1,497 Upfront</div>
+        <div class="calc-row"><span class="label">Paid upfront</span><span class="value">$1,497</span></div>
+        <div class="calc-row"><span class="label">Success fee (10%)</span><span class="value">$10,000</span></div>
+        <div class="calc-row"><span class="label">Credit applied</span><span class="value">− $1,497</span></div>
+        <div class="calc-row"><span class="label">Balance at close</span><span class="value">$8,503</span></div>
+        <div class="calc-total"><span class="label">You net</span><span class="value">$90,000</span></div>
+      </div>
+      <div class="calc-box">
+        <div class="calc-title">Option C · $2,997 Upfront</div>
+        <div class="calc-row"><span class="label">Paid upfront</span><span class="value">$2,997</span></div>
+        <div class="calc-row"><span class="label">Success fee (5%)</span><span class="value">$5,000</span></div>
+        <div class="calc-row"><span class="label">Credit applied</span><span class="value">− $2,997</span></div>
+        <div class="calc-row"><span class="label">Balance at close</span><span class="value">$2,003</span></div>
+        <div class="calc-total"><span class="label">You net</span><span class="value">$94,000</span></div>
+      </div>
+    </div>
+
+    <div class="offer-selected-info" id="offerSelectedInfo">
+      <div style="margin-bottom:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Your Selection</div>
+      <div class="offer-selected-name" id="offerSelectedName"></div>
+      <div id="offerSelectedDetails" style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:300;"></div>
+    </div>
+
+    <div class="offer-select-cta">
+      <button class="btn-primary" id="offerCTA" onclick="goTo('booking')" disabled style="margin:0 auto;opacity:0.4;cursor:not-allowed;transition:all 0.3s;">
+        Proceed to Onboarding →
+      </button>
+      <p style="margin-top:12px;font-size:12px;color:var(--muted)">Select a package above to continue</p>
+    </div>
+
+  </div>
+</div><!-- /screen-offer -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCREEN: BOOKING                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-booking" class="screen">
+  <div class="booking-container">
+
+    <div style="font-size:48px;margin-bottom:24px;">🎉</div>
+
+    <h1 class="booking-title">
+      You're Almost<br>
+      <span>Funded.</span>
+    </h1>
+
+    <p class="booking-sub">
+      One last step — book your onboarding call. We'll confirm your package, answer any final questions,
+      and get your paperwork started so we can move fast.
+    </p>
+
+    <div class="booking-card">
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;margin-bottom:24px;color:var(--teal);">
+        What Happens on the Call
+      </div>
+
+      <ul class="booking-checklist">
+        <li>
+          <span class="check-icon">✓</span>
+          <span><strong>Confirm your package selection</strong> — we'll review your chosen option and answer any pricing questions</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span><strong>Review your credit profile</strong> — a quick look at where you stand and the fastest path to capital</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span><strong>Build your funding roadmap</strong> — we'll outline your exact strategy and expected timeline</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span><strong>Answer all your questions</strong> — no pressure, no rush. We want you confident before you start</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span><strong>Get onboarded</strong> — if you're ready, we'll collect docs and kick off your file same day</span>
+        </li>
+      </ul>
+
+      <div class="booking-cta-wrapper">
+        <!-- REPLACE href with your actual Calendly / booking link -->
+        <a class="btn-booking" href="https://calendly.com/YOUR_LINK" target="_blank" id="bookingBtn">
+          📅 &nbsp; Book My Onboarding Call
+        </a>
+        <p class="booking-note">30-minute call · Free · No commitment required</p>
+      </div>
+
+    </div>
+
+    <p style="font-size:13px;color:var(--muted);line-height:1.8;text-align:center;">
+      Questions before booking?<br>
+      Text or call us directly at <strong style="color:var(--teal);">(555) 000-0000</strong><br>
+      or DM us <strong style="color:var(--teal);">@sydefunding</strong>
+    </p>
+
+  </div>
+</div><!-- /screen-booking -->
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCRIPTS                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ─── SUPABASE ───────────────────────────────────────────────────
+   Not connected yet — leads are stored locally in this session.
+   We will plug in your Supabase credentials in a later step.
+──────────────────────────────────────────────────────────────────── */
+const supabase = null;
+
+/* ─── STATE ─────────────────────────────────────────────────────── */
+const answers = {
+  creditScore:     null,
+  recentNegatives: null,
+  businessEntity:  null,
+  bankAccount:     null,
+  liquidCapital:   null,
+  investmentReady: null,
+  fundingTimeline: null,
+};
+
+let currentStep   = 1;
+const TOTAL_STEPS = 8;
+let selectedPackage = null;
+let isQualified     = false;
+
+/* ─── NAVIGATION ────────────────────────────────────────────────── */
+function goTo(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + screen).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ─── QUIZ LOGIC ────────────────────────────────────────────────── */
+function selectOption(el, key, value) {
+  // Deselect siblings in same step
+  el.closest('.quiz-options').querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = value;
+
+  // Enable next button
+  const nextBtn = document.getElementById('next' + currentStep);
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.style.cursor  = 'pointer';
+  }
+}
+
+function nextStep(from) {
+  if (from < TOTAL_STEPS) {
+    document.querySelector(`.quiz-step[data-step="${from}"]`).classList.remove('active');
+    currentStep = from + 1;
+    document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.add('active');
+    updateProgress();
+  }
+}
+
+function prevStep(from) {
+  if (from > 1) {
+    document.querySelector(`.quiz-step[data-step="${from}"]`).classList.remove('active');
+    currentStep = from - 1;
+    document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.add('active');
+    updateProgress();
+  } else {
+    goTo('landing');
+  }
+}
+
+function updateProgress() {
+  const pct = ((currentStep - 1) / TOTAL_STEPS) * 100;
+  document.getElementById('quizProgress').style.width = pct + '%';
+}
+
+function checkContactForm() {
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const bn = document.getElementById('businessName').value.trim();
+  const btn = document.getElementById('next8');
+  const ready = fn && ln && em.includes('@') && ph && bn;
+  btn.disabled = !ready;
+  btn.style.opacity = ready ? '1' : '0.4';
+  btn.style.cursor  = ready ? 'pointer' : 'not-allowed';
+}
+
+/* ─── QUALIFICATION LOGIC ───────────────────────────────────────── */
+function qualify() {
+  const score      = answers.creditScore;
+  const negatives  = answers.recentNegatives;
+  const entity     = answers.businessEntity;
+  const bank       = answers.bankAccount;
+  const liquid     = answers.liquidCapital;
+  const investment = answers.investmentReady;
+
+  // ── DIRECT FUNDING (Congratulations) ─────────────────────────────
+  // Score 680+ AND few/no negatives AND has or forming an entity
+  const scoreReady    = score === '680–719' || score === '720+';
+  const cleanFile     = negatives === 'None — clean file' || negatives === 'Yes — 1 item';
+  const hasEntity     = entity === 'Yes — LLC' || entity === 'Yes — Corporation' || entity === 'No — Need to Form One';
+  const hasBanking    = bank === 'Yes — Active (90+ days)' || bank === 'Yes — New (under 90 days)';
+  const hasLiquid     = liquid === 'Yes — personal or business';
+  const canInvest     = investment === 'Yes — $2,500–$3,000+ ready' || investment === 'Yes — $1,000–$2,500 available' || investment === 'I have something — need more info first';
+
+  // Qualify if score is ready + at least 3 of the other 5 factors pass
+  const supportingFactors = [cleanFile, hasEntity, hasBanking, hasLiquid, canInvest].filter(Boolean).length;
+  return scoreReady && supportingFactors >= 2;
+
+  // Everyone else → Foundation Program (nobody gets a dead-end rejection)
+}
+
+/* ─── SUBMIT ────────────────────────────────────────────────────── */
+async function submitQuiz() {
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const bn = document.getElementById('businessName').value.trim();
+
+  const payload = {
+    ...answers,
+    firstName:    fn,
+    lastName:     ln,
+    email:        em,
+    phone:        ph,
+    businessName: bn,
+    qualified:    qualify(),
+    submittedAt:  new Date().toISOString(),
+  };
+
+  isQualified = payload.qualified;
+
+  // Save to Supabase
+  if (supabase && SUPABASE_URL !== 'https://YOUR_PROJECT_ID.supabase.co') {
+    try {
+      const { error } = await supabase.from('leads').insert([{
+        first_name:       fn,
+        last_name:        ln,
+        email:            em,
+        phone:            ph,
+        business_name:    bn,
+        credit_score:     answers.creditScore,
+        recent_negatives: answers.recentNegatives,
+        business_entity:  answers.businessEntity,
+        bank_account:     answers.bankAccount,
+        liquid_capital:   answers.liquidCapital,
+        investment_ready: answers.investmentReady,
+        funding_timeline: answers.fundingTimeline,
+        qualified:        isQualified,
+        created_at:       new Date().toISOString(),
+      }]);
+      if (error) console.error('Supabase error:', error);
+    } catch(e) {
+      console.warn('Could not save to Supabase:', e.message);
+    }
+  }
+
+  // Route to result
+  if (isQualified) {
+    document.getElementById('qualifiedName').textContent = fn + '!';
+    goTo('qualified');
+  } else {
+    document.getElementById('foundationName').textContent = fn + '.';
+    goTo('foundation');
+  }
+}
+
+/* ─── PACKAGE SELECTION ─────────────────────────────────────────── */
+const PACKAGES = {
+  A: { name: 'Monthly Plan',      price: '$297/mo (4 months)', fee: '+ 10% Success Fee' },
+  B: { name: 'Upfront Standard',  price: '$1,497 one-time',    fee: '+ 10% Success Fee' },
+  C: { name: 'Upfront Premium',   price: '$2,997 one-time',    fee: '+ 5% Success Fee'  },
+};
+
+function selectPackage(opt) {
+  selectedPackage = opt;
+
+  ['A','B','C'].forEach(o => {
+    document.getElementById('opt' + o).classList.toggle('selected', o === opt);
+  });
+
+  const pkg = PACKAGES[opt];
+  document.getElementById('offerSelectedName').textContent = `Option ${opt} — ${pkg.name}`;
+  document.getElementById('offerSelectedDetails').textContent = `${pkg.price}  ·  ${pkg.fee}`;
+  document.getElementById('offerSelectedInfo').classList.add('visible');
+
+  const cta = document.getElementById('offerCTA');
+  cta.disabled = false;
+  cta.style.opacity = '1';
+  cta.style.cursor  = 'pointer';
+
+  // Update Supabase with package choice
+  if (supabase && SUPABASE_URL !== 'https://YOUR_PROJECT_ID.supabase.co') {
+    const em = document.getElementById('email').value.trim();
+    if (em) {
+      supabase.from('leads')
+        .update({ selected_package: opt, package_name: pkg.name })
+        .eq('email', em)
+        .then(({ error }) => { if(error) console.warn(error); });
+    }
+  }
+
+  showToast(`Option ${opt} selected ✦`, 'success');
+}
+
+/* ─── TOAST ─────────────────────────────────────────────────────── */
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+/* ─── INIT ──────────────────────────────────────────────────────── */
+// Disable all quiz next buttons initially
+document.querySelectorAll('[id^=next]').forEach(btn => {
+  btn.style.opacity = '0.4';
+  btn.style.cursor  = 'not-allowed';
+});
+</script>
+
+</body>
+</html>
